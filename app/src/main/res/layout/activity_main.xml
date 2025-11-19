@@ -20,10 +20,12 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_clock"
         style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="0dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="12dp"
         android:text="@string/action_view_clock"
+        android:height="120dp"
+        app:cornerRadius="@android:dimen/app_icon_size"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -31,10 +33,11 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_timer"
         style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="0dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:text="@string/action_view_timer"
+        android:height="120dp"
+        app:cornerRadius="@android:dimen/app_icon_size"
         app:layout_constraintTop_toBottomOf="@id/button_clock"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

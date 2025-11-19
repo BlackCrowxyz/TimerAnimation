@@ -9,7 +9,6 @@
         <item>@string/color_purple</item>
         <item>@string/color_gray</item>
     </string-array>
-
     <string-array name="clock_color_values">
         <item>#2196F3</item>
         <item>#009688</item>

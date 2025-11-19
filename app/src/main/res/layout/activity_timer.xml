@@ -2,8 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar_timer"
@@ -11,17 +10,20 @@
         android:layout_height="?attr/actionBarSize"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.Display1"
+        app:title="Timer"
+        app:titleCentered="true"/>
 
     <TextView
         android:id="@+id/text_timer_display"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="128dp"
         android:fontFamily="monospace"
         android:gravity="center"
         android:text="00:30.00"
-        android:textAppearance="@style/TextAppearance.Material3.DisplayMedium"
+        android:textAppearance="@style/TextAppearance.Material3.DisplayLarge"
         app:layout_constraintTop_toBottomOf="@id/toolbar_timer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -30,11 +32,11 @@
         android:id="@+id/picker_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/text_timer_display"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_timer">
 
         <NumberPicker
             android:id="@+id/picker_minutes"
@@ -52,7 +54,6 @@
         android:id="@+id/button_group"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:gravity="center"
         app:singleSelection="false"
         app:layout_constraintTop_toBottomOf="@id/picker_container"
@@ -62,6 +63,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_start"
             style="@style/Widget.Material3.Button"
+            android:height="@android:dimen/thumbnail_width"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/action_start" />
@@ -69,6 +71,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_pause"
             style="@style/Widget.Material3.Button"
+            android:height="@android:dimen/thumbnail_width"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/action_pause" />
@@ -76,6 +79,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_reset"
             style="@style/Widget.Material3.Button"
+            android:height="@android:dimen/thumbnail_width"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/action_reset" />
