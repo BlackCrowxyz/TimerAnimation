@@ -160,15 +160,25 @@ public class AnalogClockSurfaceView extends SurfaceView implements SurfaceHolder
     private void drawClock(Canvas canvas) {
         int width = getWidth();
         int height = getHeight();
-        float radius = Math.min(width, height) * 0.45f;
+        float size = Math.min(width, height) * 0.8f;
         float centerX = width / 2f;
         float centerY = height / 2f;
+        float halfSize = size / 2f;
+        float cornerRadius = size * 0.1f;
 
         canvas.drawRect(0, 0, width, height, backgroundPaint);
-        canvas.drawCircle(centerX, centerY, radius, facePaint);
+        
+        RectF squareRect = new RectF(
+            centerX - halfSize,
+            centerY - halfSize,
+            centerX + halfSize,
+            centerY + halfSize
+        );
+        canvas.drawRoundRect(squareRect, cornerRadius, cornerRadius, facePaint);
 
+        float radius = halfSize;
         drawTickMarks(canvas, centerX, centerY, radius);
-        drawHourNumbers(canvas, centerX, centerY, radius * 0.82f);
+        drawHourNumbers(canvas, centerX, centerY, radius * 0.85f);
 
         Calendar calendar = Calendar.getInstance();
         float millis = calendar.get(Calendar.MILLISECOND);
@@ -187,24 +197,60 @@ public class AnalogClockSurfaceView extends SurfaceView implements SurfaceHolder
     private void drawTickMarks(Canvas canvas, float cx, float cy, float radius) {
         for (int i = 0; i < 60; i++) {
             double angle = Math.toRadians(i * 6 - 90);
-            float outer = radius;
-            float inner = (i % 5 == 0) ? radius - 40 : radius - 20;
-            float startX = (float) (cx + inner * Math.cos(angle));
-            float startY = (float) (cy + inner * Math.sin(angle));
-            float endX = (float) (cx + outer * Math.cos(angle));
-            float endY = (float) (cy + outer * Math.sin(angle));
-            canvas.drawLine(startX, startY, endX, endY, i % 5 == 0 ? hourMarkerPaint : minuteMarkerPaint);
+            float cos = (float) Math.cos(angle);
+            float sin = (float) Math.sin(angle);
+            
+            float outerX, outerY, innerX, innerY;
+            float tickLength = (i % 5 == 0) ? 40f : 20f;
+            
+            // Determine which edge of the square the tick mark is on
+            if (Math.abs(cos) > Math.abs(sin)) {
+                // Left or right edge
+                outerX = cx + (cos > 0 ? radius : -radius);
+                outerY = cy + radius * sin;
+                
+                // Draw tick mark perpendicular to the edge (pointing inward)
+                innerX = outerX - (cos > 0 ? tickLength : -tickLength);
+                innerY = outerY;
+            } else {
+                // Top or bottom edge
+                outerX = cx + radius * cos;
+                outerY = cy + (sin > 0 ? radius : -radius);
+                
+                // Draw tick mark perpendicular to the edge (pointing inward)
+                innerX = outerX;
+                innerY = outerY - (sin > 0 ? tickLength : -tickLength);
+            }
+            
+            canvas.drawLine(innerX, innerY, outerX, outerY, 
+                    i % 5 == 0 ? hourMarkerPaint : minuteMarkerPaint);
         }
     }
 
     private void drawHourNumbers(Canvas canvas, float cx, float cy, float radius) {
-        RectF bounds = new RectF();
         for (int i = 1; i <= 12; i++) {
             double angle = Math.toRadians(i * 30 - 90);
-            float x = (float) (cx + radius * Math.cos(angle));
-            float y = (float) (cy + radius * Math.sin(angle)) + (numberPaint.getTextSize() / 3);
+            float x, y;
+            
+            // Calculate position on square perimeter
+            float cos = (float) Math.cos(angle);
+            float sin = (float) Math.sin(angle);
+            
+            // Determine which side of the square the number is on
+            if (Math.abs(cos) > Math.abs(sin)) {
+                // Left or right side
+                x = cx + (cos > 0 ? radius : -radius);
+                y = cy + radius * sin;
+            } else {
+                // Top or bottom side
+                x = cx + radius * cos;
+                y = cy + (sin > 0 ? radius : -radius);
+            }
+            
+            // Adjust for text centering
+            y += (numberPaint.getTextSize() / 3);
+            
             String label = String.valueOf(i);
-            numberPaint.getTextBounds(label, 0, label.length(), new android.graphics.Rect());
             canvas.drawText(label, x, y, numberPaint);
         }
     }
