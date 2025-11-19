@@ -2,4 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="clock_hour_hand_default">#2196F3</color>
+    <color name="clock_minute_hand_default">#009688</color>
+    <color name="clock_second_hand_default">#F44336</color>
+    <color name="clock_milli_hand_default">#FF9800</color>
+    <color name="clock_marker_default">#455A64</color>
 </resources>

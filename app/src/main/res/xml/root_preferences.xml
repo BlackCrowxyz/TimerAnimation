@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/pref_category_hands">
+        <ListPreference
+            android:key="pref_hour_hand"
+            android:title="@string/pref_hour_hand_title"
+            android:entries="@array/clock_color_names"
+            android:entryValues="@array/clock_color_values"
+            android:defaultValue="@string/color_blue"
+            android:summary="%s" />
+
+        <ListPreference
+            android:key="pref_minute_hand"
+            android:title="@string/pref_minute_hand_title"
+            android:entries="@array/clock_color_names"
+            android:entryValues="@array/clock_color_values"
+            android:defaultValue="@string/color_teal"
+            android:summary="%s" />
+
+        <ListPreference
+            android:key="pref_second_hand"
+            android:title="@string/pref_second_hand_title"
+            android:entries="@array/clock_color_names"
+            android:entryValues="@array/clock_color_values"
+            android:defaultValue="@string/color_red"
+            android:summary="%s" />
+
+        <ListPreference
+            android:key="pref_milli_hand"
+            android:title="@string/pref_milli_hand_title"
+            android:entries="@array/clock_color_names"
+            android:entryValues="@array/clock_color_values"
+            android:defaultValue="@string/color_orange"
+            android:summary="%s" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_category_markers">
+        <ListPreference
+            android:key="pref_marker_color"
+            android:title="@string/pref_marker_color_title"
+            android:entries="@array/clock_color_names"
+            android:entryValues="@array/clock_color_values"
+            android:defaultValue="@string/color_gray"
+            android:summary="%s" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

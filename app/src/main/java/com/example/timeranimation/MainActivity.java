@@ -1,32 +1,43 @@
 package com.example.timeranimation;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TimerSurfaceView timer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        timer = new TimerSurfaceView(this, 400);
-        setContentView(timer);
+        setContentView(R.layout.activity_main);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        View clockButton = findViewById(R.id.button_clock);
+        View timerButton = findViewById(R.id.button_timer);
+
+        clockButton.setOnClickListener(v -> startActivity(new Intent(this, ClockActivity.class)));
+        timerButton.setOnClickListener(v -> startActivity(new Intent(this, TimerActivity.class)));
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        timer.onResumeTimer();
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        timer.onPauseTimer();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

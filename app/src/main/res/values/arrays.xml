@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="clock_color_names">
+        <item>@string/color_blue</item>
+        <item>@string/color_teal</item>
+        <item>@string/color_green</item>
+        <item>@string/color_orange</item>
+        <item>@string/color_red</item>
+        <item>@string/color_purple</item>
+        <item>@string/color_gray</item>
+    </string-array>
+
+    <string-array name="clock_color_values">
+        <item>#2196F3</item>
+        <item>#009688</item>
+        <item>#4CAF50</item>
+        <item>#FF9800</item>
+        <item>#F44336</item>
+        <item>#9C27B0</item>
+        <item>#607D8B</item>
+    </string-array>
+</resources>
