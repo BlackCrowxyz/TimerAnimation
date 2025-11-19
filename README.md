@@ -1,6 +1,6 @@
 # Analog Clock & Timer
 
-<h1>Screenshots</h1>
+<!-- <h1>Screenshots</h1>
 
 <div style="display:flex; gap:20px; align-items:flex-start;">
   <div style="text-align:center;">
@@ -17,7 +17,14 @@
     <p>Timer activity:</p>
     <img src="https://github.com/BlackCrowxyz/TimerAnimation/blob/main/Screenshots/3.png" style="width:120px;" />
   </div>
-</div>
+</div> -->
+
+## Screenshots
+
+| Main activity | Clock activity | Timer activity |
+|--------------|----------------|----------------|
+| ![](https://github.com/BlackCrowxyz/TimerAnimation/blob/main/Screenshots/1.png) | ![](https://github.com/BlackCrowxyz/TimerAnimation/blob/main/Screenshots/2.png) | ![](https://github.com/BlackCrowxyz/TimerAnimation/blob/main/Screenshots/3.png) |
+
 
 ## Overview
 This Android app showcases a custom SurfaceView-driven analog clock alongside an interactive countdown timer. A launcher menu routes to either experience and exposes a settings screen where users can personalize clock hand and marker colors. Preferences persist between sessions, demonstrating shared preference storage and retrieval.
