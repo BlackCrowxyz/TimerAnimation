@@ -10,7 +10,7 @@ This Android app showcases a custom SurfaceView-driven analog clock alongside an
   - Colors driven by user preferences with instant updates
 - **Timer activity**
   - NumberPickers for minutes/seconds, start/pause/reset controls, and sub-second display
-  - Resilient to configuration changes and handles lifecycle pausing
+  - Timer runs via a shared manager so countdowns continue even after leaving the screen; completion fires a toast “alarm”
 - **Navigation & settings**
   - Main menu with Material buttons to open each activity
   - Toolbar menu entry into the preferences screen

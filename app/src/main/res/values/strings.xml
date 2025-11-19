@@ -8,6 +8,7 @@
     <string name="action_start">Start</string>
     <string name="action_pause">Pause</string>
     <string name="action_reset">Reset</string>
+    <string name="timer_finished_toast">Timer complete!</string>
 
     <string name="pref_category_hands">Clock Hands</string>
     <string name="pref_category_markers">Markers</string>

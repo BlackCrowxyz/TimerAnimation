@@ -1,7 +1,6 @@
 package com.example.timeranimation;
 
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
@@ -13,8 +12,6 @@ import com.google.android.material.button.MaterialButton;
 
 public class TimerActivity extends AppCompatActivity {
 
-    private static final long MILLIS_IN_SECOND = 1000L;
-
     private NumberPicker minutesPicker;
     private NumberPicker secondsPicker;
     private TextView timerDisplay;
@@ -22,10 +19,28 @@ public class TimerActivity extends AppCompatActivity {
     private MaterialButton pauseButton;
     private MaterialButton resetButton;
 
-    private CountDownTimer countDownTimer;
-    private long configuredDurationMillis;
-    private long remainingMillis;
-    private boolean isRunning;
+    private TimerManager timerManager;
+    private boolean suppressPickerListener;
+
+    private final TimerManager.Listener timerListener = new TimerManager.Listener() {
+        @Override
+        public void onTick(long remainingMillis) {
+            updateDisplay(remainingMillis);
+        }
+
+        @Override
+        public void onStateChanged(boolean isRunning, long configuredDuration, long remainingMillis) {
+            updateButtonStates(isRunning);
+            if (!isRunning) {
+                updatePickerValues(configuredDuration);
+            }
+        }
+
+        @Override
+        public void onTimerFinished() {
+            updateDisplay(0);
+        }
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,42 +62,22 @@ public class TimerActivity extends AppCompatActivity {
         pauseButton = findViewById(R.id.button_pause);
         resetButton = findViewById(R.id.button_reset);
 
+        timerManager = TimerManager.getInstance(getApplicationContext());
         initNumberPickers();
-
-        if (savedInstanceState != null) {
-            configuredDurationMillis = savedInstanceState.getLong("configuredDurationMillis", MILLIS_IN_SECOND * 30);
-            remainingMillis = savedInstanceState.getLong("remainingMillis", configuredDurationMillis);
-            isRunning = savedInstanceState.getBoolean("isRunning", false);
-            if (isRunning) {
-                startTimer(remainingMillis);
-            } else {
-                updateDisplay(remainingMillis);
-            }
-        } else {
-            configuredDurationMillis = MILLIS_IN_SECOND * 30;
-            remainingMillis = configuredDurationMillis;
-            updateDisplay(remainingMillis);
-        }
+        updatePickerValues(timerManager.getConfiguredDurationMillis());
+        updateDisplay(timerManager.getRemainingMillis());
+        updateButtonStates(timerManager.isRunning());
 
         startButton.setOnClickListener(v -> {
-            if (!isRunning) {
-                if (remainingMillis <= 0) {
-                    remainingMillis = Math.max(configuredDurationMillis, MILLIS_IN_SECOND);
-                }
-                startTimer(remainingMillis);
-            }
+            timerManager.start();
         });
 
         pauseButton.setOnClickListener(v -> {
-            if (isRunning) {
-                stopTimer();
-            }
+            timerManager.pause();
         });
 
         resetButton.setOnClickListener(v -> {
-            stopTimer();
-            remainingMillis = configuredDurationMillis;
-            updateDisplay(remainingMillis);
+            timerManager.reset();
         });
     }
 
@@ -93,45 +88,29 @@ public class TimerActivity extends AppCompatActivity {
         secondsPicker.setMaxValue(59);
 
         NumberPicker.OnValueChangeListener listener = (picker, oldVal, newVal) -> {
-            configuredDurationMillis = ((minutesPicker.getValue() * 60L) + secondsPicker.getValue()) * MILLIS_IN_SECOND;
-            if (!isRunning) {
-                remainingMillis = configuredDurationMillis;
-                updateDisplay(remainingMillis);
+            if (suppressPickerListener) {
+                return;
             }
+            long duration = ((minutesPicker.getValue() * 60L) + secondsPicker.getValue()) * 1000L;
+            timerManager.setConfiguredDuration(duration);
         };
 
         minutesPicker.setOnValueChangedListener(listener);
         secondsPicker.setOnValueChangedListener(listener);
-
-        minutesPicker.setValue(0);
-        secondsPicker.setValue(30);
-        configuredDurationMillis = ((minutesPicker.getValue() * 60L) + secondsPicker.getValue()) * MILLIS_IN_SECOND;
     }
 
-    private void startTimer(long durationMillis) {
-        countDownTimer = new CountDownTimer(durationMillis, 50) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                remainingMillis = millisUntilFinished;
-                updateDisplay(remainingMillis);
-            }
-
-            @Override
-            public void onFinish() {
-                remainingMillis = 0;
-                updateDisplay(remainingMillis);
-                isRunning = false;
-            }
-        }.start();
-        isRunning = true;
+    private void updatePickerValues(long durationMillis) {
+        suppressPickerListener = true;
+        long minutes = durationMillis / 60000;
+        long seconds = (durationMillis % 60000) / 1000;
+        minutesPicker.setValue((int) minutes);
+        secondsPicker.setValue((int) seconds);
+        suppressPickerListener = false;
     }
 
-    private void stopTimer() {
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
-            countDownTimer = null;
-        }
-        isRunning = false;
+    private void updateButtonStates(boolean isRunning) {
+        startButton.setEnabled(!isRunning);
+        pauseButton.setEnabled(isRunning);
     }
 
     private void updateDisplay(long millis) {
@@ -143,17 +122,15 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putLong("configuredDurationMillis", configuredDurationMillis);
-        outState.putLong("remainingMillis", remainingMillis);
-        outState.putBoolean("isRunning", isRunning);
+    protected void onStart() {
+        super.onStart();
+        timerManager.addListener(timerListener);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        stopTimer();
+        timerManager.removeListener(timerListener);
     }
 }
 
