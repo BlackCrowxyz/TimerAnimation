@@ -21,7 +21,7 @@
         android:fontFamily="monospace"
         android:gravity="center"
         android:text="00:30.00"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.DisplayMedium"
+        android:textAppearance="@style/TextAppearance.Material3.DisplayMedium"
         app:layout_constraintTop_toBottomOf="@id/toolbar_timer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -61,21 +61,21 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_start"
-            style="@style/Widget.MaterialComponents.Button"
+            style="@style/Widget.Material3.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/action_start" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_pause"
-            style="@style/Widget.MaterialComponents.Button"
+            style="@style/Widget.Material3.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/action_pause" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_reset"
-            style="@style/Widget.MaterialComponents.Button"
+            style="@style/Widget.Material3.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/action_reset" />
