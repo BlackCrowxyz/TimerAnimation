@@ -113,7 +113,6 @@ public class AnalogClockSurfaceView extends SurfaceView implements SurfaceHolder
 
     @Override
     public void surfaceChanged(@NonNull SurfaceHolder holder, int format, int width, int height) {
-        // No-op
     }
 
     @Override

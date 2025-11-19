@@ -58,9 +58,6 @@ public class TimerActivity extends AppCompatActivity {
         minutesPicker = findViewById(R.id.picker_minutes);
         secondsPicker = findViewById(R.id.picker_seconds);
         timerDisplay = findViewById(R.id.text_timer_display);
-        startButton = findViewById(R.id.button_start);
-        pauseButton = findViewById(R.id.button_pause);
-        resetButton = findViewById(R.id.button_reset);
 
         timerManager = TimerManager.getInstance(getApplicationContext());
         initNumberPickers();
@@ -68,14 +65,17 @@ public class TimerActivity extends AppCompatActivity {
         updateDisplay(timerManager.getRemainingMillis());
         updateButtonStates(timerManager.isRunning());
 
+        startButton = findViewById(R.id.button_start);
         startButton.setOnClickListener(v -> {
             timerManager.start();
         });
 
+        pauseButton = findViewById(R.id.button_pause);
         pauseButton.setOnClickListener(v -> {
             timerManager.pause();
         });
 
+        resetButton = findViewById(R.id.button_reset);
         resetButton.setOnClickListener(v -> {
             timerManager.reset();
         });

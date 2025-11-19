@@ -1,10 +1,12 @@
 package com.example.timeranimation;
 
+import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.material.button.MaterialButton;
 
 public class ClockActivity extends AppCompatActivity {
 
@@ -21,6 +23,11 @@ public class ClockActivity extends AppCompatActivity {
         }
 
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
+
+        MaterialButton settingsButton = findViewById(R.id.button_settings);
+        settingsButton.setOnClickListener(v -> {
+            startActivity(new Intent(this, SettingsActivity.class));
+        });
     }
 }
 
